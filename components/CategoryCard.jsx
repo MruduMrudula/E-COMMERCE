@@ -1,5 +1,4 @@
 import { View, Text, Image, Pressable } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 export default function CategoryCard({
   title,
   image,

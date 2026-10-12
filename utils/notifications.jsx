@@ -3,7 +3,7 @@ import { Platform } from "react-native";
 
 export async function setupNotifications() {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
-
+   
   let finalStatus = existingStatus;
 
   if (existingStatus !== "granted") {
@@ -11,6 +11,7 @@ export async function setupNotifications() {
 
     finalStatus = status;
   }
+  console.log("NOTIFICATION PERMISSION:", finalStatus);
 
   if (finalStatus !== "granted") {
     console.log("Notification permission not granted");
@@ -28,15 +29,27 @@ export async function setupNotifications() {
 }
 
 export async function sendOrderNotification(order) {
-  await Notifications.scheduleNotificationAsync({
-    content: {
-      title: "Order Placed 🎉",
-      body: `Your order #${order.id.slice(-6)} has been placed successfully.`,
-      data: {
-        orderId: order.id,
+  try {
+    const notificationId = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Order Placed 🎉",
+        body: `Your order #${order.id.slice(-6)} has been placed successfully.`,
+        data: {
+          orderId: order.id,
+        },
+        sound: "default",
+        ...(Platform.OS === "android" && {
+          channelId: "orders",
+        }),
       },
-    },
+      trigger: null,
+    });
 
-    trigger: null,
-  });
+    console.log("NOTIFICATION SCHEDULED:", notificationId);
+
+    return true;
+  } catch (error) {
+    console.log("NOTIFICATION ERROR:", error);
+    return false;
+  }
 }

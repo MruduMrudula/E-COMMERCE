@@ -1,8 +1,8 @@
 
-import { ScrollView, Text, View } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { ScrollView, Text, View, Pressable } from "react-native";
+import { useLocalSearchParams , router} from "expo-router";
 import { useOrderStore } from "../store/orderStore";
-
+import { Ionicons } from "@expo/vector-icons";
 export default function OrderDetails() {
   const { orderId } = useLocalSearchParams();
 
@@ -24,15 +24,23 @@ export default function OrderDetails() {
 
   return (
     <ScrollView
-      className="flex-1 bg-gray-100"
+      className="flex-1"
       contentContainerStyle={{ padding: 20 }}
     >
-      <Text className="mb-6 text-2xl font-bold">
+      <Pressable
+            onPress={() => router.back()}
+            className="absolute left-5 top-12 z-10 h-10 w-10 items-center justify-center rounded-full shadow"
+          >
+            <Text className="text-2xl text-black dark:text-white">
+              <Ionicons name="chevron-back-sharp" size={18} color="#000000" />
+            </Text>
+          </Pressable>
+      <Text className="mt-20 mb-3 text-2xl font-bold ">
         Order Details
       </Text>
 
       {/* Order Information */}
-      <View className="mb-5 rounded-2xl bg-white p-5">
+      <View className="mb-5 rounded-2xl  p-5 bg-white">
         <Text className="mb-3 text-lg font-bold">
           Order Information
         </Text>

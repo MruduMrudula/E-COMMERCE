@@ -19,5 +19,5 @@
     "app/(tabs)/explore.jsx",
     "app/login.jsx",
     "nativewind-env.d.ts"
-  ]
+, "constants/theme.jsx"  ]
 }
